@@ -1,5 +1,5 @@
-import { numericFormatter } from 'react-number-format'
 import IconDots from '../icons/dots'
+import formatToCurrency from '../utils/format-to-currency'
 import Dropdown from './dropdown'
 import styles from './table.module.css'
 
@@ -22,12 +22,7 @@ export default function Table({ data, dialogRef, handleEdit, handleRemove }) {
               <tr key={id}>
                 <th scope="row">{description}</th>
                 <td>
-                  <pre>
-                    {numericFormatter(quantity.toString(), {
-                      prefix: '$ ',
-                      thousandSeparator: true
-                    })}
-                  </pre>
+                  <pre>{formatToCurrency(quantity)}</pre>
                 </td>
                 <td>
                   <Dropdown
