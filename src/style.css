@@ -27,6 +27,7 @@
   box-sizing: border-box;
   font: inherit;
   margin: 0;
+  outline: none;
   padding: 0;
 }
 
@@ -38,6 +39,12 @@ body {
   background-color: var(--color-beige-100);
   color: var(--color-grey-900);
   font-size: 3.5rem;
+}
+
+section {
+  background-color: var(--color-white);
+  border-radius: 3rem;
+  padding: 6rem 5rem;
 }
 
 h1 {
@@ -60,8 +67,16 @@ svg {
   width: 6rem;
 }
 
-ul {
-  list-style: none;
+.btn-primary {
+  background-color: var(--color-grey-900);
+  border-radius: 2rem;
+  color: var(--color-white);
+  font-weight: bold;
+  padding: 2rem 4rem;
+  transition: background-color var(--transition-ease);
+  &:where(:hover, :focus-visible) {
+    background-color: var(--color-grey-500);
+  }
 }
 
 #root {

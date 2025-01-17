@@ -1,39 +1,66 @@
+import { useAtomValue, useSetAtom } from 'jotai'
+import { useMemo } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router'
 import BudgetsIcon from '~/budgets/icon'
 import ExpensesIcon from '~/expenses/icon'
-import IncomeIcon from '~/income/icon'
+import IncomesIcon from '~/incomes/icon'
 import OverviewIcon from '~/overview/icon'
 import { MONTHS } from '../constants'
-import useDate from '../hooks/use-date'
-import { getYear } from '../utils/date'
+import IconCaret from '../icons/caret'
+import {
+  currentMonth,
+  currentYear,
+  dateAtom,
+  setMonthAtom,
+  setYearAtom
+} from '../store/date'
+import Dropdown from './dropdown'
 import styles from './layout.module.css'
 import Logo from './logo'
-import Select from './select'
 
-const currentYear = getYear()
 const years = [currentYear, currentYear - 1]
 const links = {
   '/': { Icon: OverviewIcon, name: 'Resumen' },
-  '/ingresos': { Icon: IncomeIcon, name: 'Ingresos' },
+  '/ingresos': { Icon: IncomesIcon, name: 'Ingresos' },
   '/gastos': { Icon: ExpensesIcon, name: 'Gastos' },
   '/presupuestos': { Icon: BudgetsIcon, name: 'Presupuestos' }
 }
 
 export default function Layout() {
   const { pathname } = useLocation()
-  const month = useDate((state) => state.month)
-  const year = useDate((state) => state.year)
-  const setMonth = useDate((state) => state.setMonth)
-  const setYear = useDate((state) => state.setYear)
+  const { month, year } = useAtomValue(dateAtom)
+  const setMonth = useSetAtom(setMonthAtom)
+  const setYear = useSetAtom(setYearAtom)
+  const months = useMemo(() => {
+    return year === currentYear
+      ? MONTHS.slice(0, MONTHS.indexOf(currentMonth) + 1)
+      : MONTHS.toReversed()
+  }, [year])
 
   return (
     <>
       <main className={styles.main}>
         <header className={styles.header}>
           <h1>{links[pathname].name}</h1>
-          <div>
-            <Select options={MONTHS} value={month} onChange={setMonth} />
-            <Select options={years} value={year} onChange={setYear} />
+          <div className={styles.dropdowns}>
+            <Dropdown
+              items={months}
+              select
+              selectedIndex={months.indexOf(month)}
+              handleClick={setMonth}
+            >
+              {month}
+              <IconCaret />
+            </Dropdown>
+            <Dropdown
+              items={years}
+              select
+              selectedIndex={years.indexOf(year)}
+              handleClick={setYear}
+            >
+              {year}
+              <IconCaret />
+            </Dropdown>
           </div>
         </header>
         <Outlet />

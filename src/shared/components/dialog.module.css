@@ -1,0 +1,46 @@
+.container {
+  background-color: var(--color-white);
+  border-radius: 3rem;
+  margin: auto;
+  max-width: 140rem;
+  padding: 8rem;
+  width: calc(100% - 5rem);
+  &::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+}
+
+.header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  h2 {
+    font-size: 5rem;
+    font-weight: bold;
+    line-height: 1.2;
+    text-transform: capitalize;
+  }
+  button {
+    color: var(--color-grey-500);
+    display: flex;
+    transition: color var(--transition-ease);
+    &:where(:hover, :focus-visible) {
+      color: var(--color-red);
+    }
+  }
+  svg {
+    width: 6.5rem;
+  }
+}
+
+.form {
+  & > div {
+    display: grid;
+    gap: 4rem;
+    margin-block: 5rem;
+  }
+  & > button {
+    padding-block: 3rem;
+    width: 100%;
+  }
+}

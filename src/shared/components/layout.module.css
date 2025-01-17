@@ -13,12 +13,13 @@
   gap: 4rem;
   flex-wrap: wrap;
   margin-bottom: 8rem;
-  div {
-    display: flex;
-    gap: 2rem;
-    button {
-      padding: 1.5rem 2.5rem;
-    }
+}
+
+.dropdowns {
+  display: flex;
+  gap: 2rem;
+  & > div > button {
+    padding: 1.5rem 2.5rem;
   }
 }
 
@@ -55,7 +56,6 @@
     font-size: 3rem;
     font-weight: bold;
     gap: 1rem;
-    outline: none;
     padding: 2rem;
     transition: color var(--transition-ease);
     @media (width >= 1280px) {

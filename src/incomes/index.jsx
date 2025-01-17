@@ -5,19 +5,19 @@ import Dialog from '../shared/components/dialog'
 import Input from '../shared/components/input'
 import Table from '../shared/components/table'
 import {
-  addExpenseAtom,
-  editExpenseAtom,
-  expensesByDateAtom,
-  removeExpenseAtom
+  addIncomeAtom,
+  editIncomeAtom,
+  incomesByDateAtom,
+  removeIncomeAtom
 } from './atoms'
 
-export default function Expenses() {
+export default function Incomes() {
   const dialogRef = useRef(null)
-  const expenses = useAtomValue(expensesByDateAtom)
-  const [expense, setExpense] = useState(null)
-  const addExpense = useSetAtom(addExpenseAtom)
-  const editExpense = useSetAtom(editExpenseAtom)
-  const removeExpense = useSetAtom(removeExpenseAtom)
+  const incomes = useAtomValue(incomesByDateAtom)
+  const [income, setIncome] = useState(null)
+  const addIncome = useSetAtom(addIncomeAtom)
+  const editIncome = useSetAtom(editIncomeAtom)
+  const removeIncome = useSetAtom(removeIncomeAtom)
 
   function action(formData) {
     const { description, quantity } = Object.fromEntries(formData)
@@ -27,7 +27,7 @@ export default function Expenses() {
       quantity: Number(quantity.replaceAll(',', ''))
     }
 
-    expense ? editExpense({ id: expense.id, ...data }) : addExpense(data)
+    income ? editIncome({ id: income.id, ...data }) : addIncome(data)
 
     dialogRef.current.close()
   }
@@ -35,33 +35,33 @@ export default function Expenses() {
   return (
     <>
       <Table
-        data={expenses}
+        data={incomes}
         dialogRef={dialogRef}
-        handleEdit={(expense) => setExpense(expense)}
-        handleRemove={removeExpense}
+        handleEdit={(income) => setIncome(income)}
+        handleRemove={removeIncome}
       />
       <Dialog
         ref={dialogRef}
-        title={expense ? 'Editar gasto' : 'Añadir gasto'}
+        title={income ? 'Editar ingreso' : 'Añadir ingreso'}
         action={action}
-        handleClose={() => setExpense(null)}
+        handleClose={() => setIncome(null)}
       >
         <div>
           <Input
             label="Descripción"
             name="description"
-            defaultValue={expense?.description}
+            defaultValue={income?.description}
           />
           <NumericFormat
             customInput={Input}
             label="Cantidad"
             name="quantity"
-            defaultValue={expense?.quantity}
+            defaultValue={income?.quantity}
             thousandSeparator
           />
         </div>
         <button className="btn-primary" type="submit">
-          {expense ? 'Guardar' : 'Añadir'}
+          {income ? 'Guardar' : 'Añadir'}
         </button>
       </Dialog>
     </>
